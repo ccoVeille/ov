@@ -52,7 +52,7 @@ ov is a terminal pager.
   * 3.16. [Search](#search)
   * 3.17. [Pattern](#pattern)
   * 3.18. [Filter](#filter)
-  * 3.19. [caption](#caption)
+  * 3.19. [Caption](#caption)
   * 3.20. [Mark](#mark)
   * 3.21. [Watch](#watch)
   * 3.22. [Mouse support](#mouse-support)
@@ -303,8 +303,7 @@ Create a `config.yaml` file in one of the above directories. If the file is in t
 
 Please refer to the sample [ov.yaml](https://raw.githubusercontent.com/noborus/ov/master/ov.yaml) configuration file.
 
-> **Note**
->
+> [!NOTE]
 > If you like `less` key bindings, copy  [ov-less.yaml](https://raw.githubusercontent.com/noborus/ov/master/ov-less.yaml) and use it.
 
 ###  3.3. <a name='header'></a>Header
@@ -314,6 +313,8 @@ The `--header` (`-H`) (default key `H`) option fixedly displays the specified nu
 ```console
 ov --header 1 README.md
 ```
+
+[Related styling](#style-customization): `StyleHeader`.
 
 ####  3.3.1. <a name='skip'></a>Skip
 
@@ -337,6 +338,8 @@ Enclose in '/' when using regular expressions.
 ```console
 ps aux | ov -H1 --column-delimiter "/\s+/" --column-rainbow --column-mode
 ```
+
+[Related styling](#style-customization): `StyleColumnHighlight`,`StyleColumnRainbow`.
 
 ###  3.5. <a name='column-rainbow-mode'></a>Column rainbow mode
 
@@ -375,6 +378,8 @@ StyleColumnRainbow:
     - Foreground: "red"
 ```
 
+[Related styling](#style-customization): `StyleColumnRainbow`.
+
 ###  3.6. <a name='column-width'></a>Column-width
 
 For output like `ps`, using `--column-width` is a better way to separate columns than using spaces as delimiters.
@@ -403,6 +408,8 @@ The style can be set with [Style customization](#style-customization).
 ```console
 ov --alternate-rows test.csv
 ```
+
+[Related styling](#style-customization): `StyleAlternate`.
 
 ###  3.9. <a name='section'></a>Section
 
@@ -437,6 +444,8 @@ You can specify the number of lines using the `--section-header-num` option or k
 	log = "ov -F --section-delimiter '^commit' --section-header --section-header-num 3"
 ```
 
+[Related styling](#style-customization): `StyleSectionLine`.
+
 ###  3.10. <a name='multiple-files'></a>Multiple files
 
 `ov` can also open multiple files.
@@ -446,6 +455,8 @@ ov file1 file2
 ```
 
 Multiple files are each opened as a document and can be navigated using the Next Document `]` key (default), Previous Document `[` key (default).
+
+Related Styling: [Customizing the bottom status line](#customizing-the-bottom-status-line).
 
 ###  3.11. <a name='follow-mode'></a>Follow mode
 
@@ -487,8 +498,7 @@ The following example is displayed from the header (#) at the bottom.
 ov --section-delimiter "^#" --follow-section README.md
 ```
 
-> **Note**
->
+> [!NOTE]
 > [Watch](#watch) mode is a mode in which `--follow-section` and `--section-delimiter "^\f"` are automatically set.
 
 ###  3.15. <a name='exec-mode'></a>Exec mode
@@ -531,6 +541,8 @@ Incsearch: true
 SmartCaseSensitive: true
 ```
 
+[Related styling](#style-customization): `StyleSearchHighlight`
+
 ###  3.17. <a name='pattern'></a>Pattern
 
 The pattern option allows you to specify a search at startup.
@@ -546,7 +558,7 @@ The filter input creates a new document only for the lines that match the filter
 
 Move next document `]` and previous document `[` key(default) allow you to move between the filter document and the original document.
 
-The `K` key (default) closes all documents created by the filter.
+The `K`(`shift+k`) key (default) closes all documents created by the filter.
 
 You can also specify a filter using the command line option `--filter`.
 
@@ -570,7 +582,7 @@ The command line option for this can be specified with `--non-match-filter`.
 ov --non-match-filter info /var/log/syslog
 ```
 
-###  3.19. <a name='caption'></a>caption
+###  3.19. <a name='caption'></a>Caption
 
 You can specify a caption instead of the file name in status line to display it.
 
@@ -594,6 +606,8 @@ Marks can be erased individually with the `M` key(default).
 It is also possible to delete all marks with the `ctrl + delete` key(default).
 
 Use the `>`next and `<`previous (default) key to move to the marked position.
+
+[Related styling](#style-customization): `StyleMarkLine`.
 
 ###  3.21. <a name='watch'></a>Watch
 
@@ -661,6 +675,8 @@ StyleMultiColorHighlight:
   - Foreground: "#c0c0c0"
 ```
 
+[Related styling](#style-customization): `StyleMultiColorHighlight`.
+
 ###  3.24. <a name='plain'></a>Plain
 
 Supports disable decoration ANSI escape sequences.
@@ -683,6 +699,8 @@ and the jump-target will be changed.
 ```console
 ov --section-delimiter "^#" --jump-target section README.md
 ```
+
+[Related styling](#style-customization): `StyleJumpTarget`.
 
 ###  3.26. <a name='view-mode'></a>View mode
 
@@ -823,7 +841,7 @@ MemoryLimit: 1000
 | short |                    long                    |                            purpose                             |
 |-------|--------------------------------------------|----------------------------------------------------------------|
 | -C,   | --alternate-rows                           | alternately change the line color                              |
-|       | --caption string                           | caption                                                        |
+|       | --caption string                           | custom caption                                                 |
 | -i,   | --case-sensitive                           | case-sensitive in search                                       |
 | -d,   | --column-delimiter character               | column delimiter character (default ",")                       |
 | -c,   | --column-mode                              | column mode                                                    |
@@ -839,9 +857,9 @@ MemoryLimit: 1000
 | -a,   | --exit-write-after int                     | number after the current lines when exiting                    |
 | -b,   | --exit-write-before int                    | number before the current lines when exiting                   |
 |       | --filter string                            | filter search pattern                                          |
-| -A,   | --follow-all                               | follow mode to switch to updated files                         |
-| -f,   | --follow-mode                              | follow mode                                                    |
-|       | --follow-name                              | file name follow mode                                          |
+| -A,   | --follow-all                               | follow multiple files and show the most recently updated one   |
+| -f,   | --follow-mode                              | monitor file and display new content as it is written          |
+|       | --follow-name                              | follow mode to monitor by file name                            |
 |       | --follow-section                           | section-by-section follow mode                                 |
 | -H,   | --header int                               | number of header lines to be displayed constantly              |
 | -h,   | --help                                     | help for ov                                                    |
@@ -867,7 +885,7 @@ MemoryLimit: 1000
 |       | --smart-case-sensitive                     | smart case-sensitive in search                                 |
 | -x,   | --tab-width int                            | tab stop width (default 8)                                     |
 | -v,   | --version                                  | display version information                                    |
-|       | --view-mode string                         | view mode                                                      |
+|       | --view-mode string                         | apply predefined settings for a specific mode                  |
 | -T,   | --watch seconds                            | watch mode interval(seconds)                                   |
 | -w,   | --wrap[=true\|false]                       | wrap mode (default true)                                       |
 
